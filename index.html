@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock, Paper, Scissors</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<h1>Rock, Paper Scissors</h1>
+<h3>INSTRUCTIONS:</h3>
+<div class="lead">
+<p>Open you Javascript Console <em>(ctrl + shift + i)</em> and type "game()" to play.</p>
+<p>More to come later, have fun!</p>
+</div>
+
+  <script>
+function computerChoice() { // returns random computer choice
+	let choice = Math.random();
+	if (choice < .333) {
+		return "rock";
+	} else if (choice > .667) {
+		return "paper";
+	} else {
+		return  "scissors";
+	}
+}
+function playerChoice(rnd, cpuScore, playerScore, ties) { // prompt for player selection
+	playerSelection = window.prompt("Round " + rnd + "\nComputer Score: " + cpuScore + "\nPlayer Score: " + playerScore + "\nTies:" + ties + "\nEnter rock, paper, or scissors.").toLowerCase();
+	while (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors"){
+		playerSelection = window.prompt("Round " + rnd + "\nComputer Score: " + cpuScore + "\nPlayer Score: " + playerScore + "\nTies:" + ties + "\nYOU MADE A TYPO: Enter rock, paper, or scissors..").toLowerCase();
+	}
+	return playerSelection;
+}
+function playRound(rnd, cpuScore, playerScore, ties) {
+	playerSelection = playerChoice(rnd, cpuScore, playerScore, ties);
+	computerSelection = computerChoice();
+	if (computerSelection == playerSelection) {
+		return "tie";
+	} else if (computerSelection == "rock" && playerSelection == "scissors"){
+		return "computer";
+	} else if (computerSelection == "paper" && playerSelection == "rock"){
+			return "computer";
+	} else if (computerSelection == "scissors" && playerSelection == "paper"){
+		return "computer";
+	}
+	return "player";
+}
+function game() {
+	let roundNumber = 1;
+	let cpuScore = 0;
+	let playerScore = 0;
+	let ties = 0;
+	while (cpuScore <= 2 && playerScore <= 2){
+		let game = playRound(roundNumber, cpuScore, playerScore, ties);
+		if (game == "computer") {
+			cpuScore++;
+			roundNumber++;
+		} else if (game == "player") {
+			playerScore++;
+			roundNumber++;
+		} else {
+			ties++;
+			roundNumber++;
+		}
+	}
+	if (cpuScore > playerScore){
+		var winner = "Computer Wins!";
+		//return winner + " Computer Score:" + cpuScore + ", Player Score:" + playerScore + ", Ties: " + ties + ",Total Rounds:" + roundNumber + ".";
+		} else {
+		var winner = "Player Wins!";
+		}
+return winner + " Computer Score:" + cpuScore + ", Player Score:" + playerScore + ", Ties: " + ties + ",Total Rounds:" + roundNumber + ".";
+}
